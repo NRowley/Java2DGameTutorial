@@ -1,12 +1,12 @@
 package game;
 
+import gfx.SpriteSheet;
+
 import javax.swing.*;
-import javax.swing.plaf.PanelUI;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.security.PublicKey;
 
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -23,6 +23,7 @@ public class Game extends Canvas implements Runnable {
     public boolean running = false;
     public int tickCount = 0;
 
+    private SpriteSheet spriteSheet = new SpriteSheet("/sprite_sheet.png");
     //GAME METHODS//////////////////////////////////////
     public Game() {
         setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
