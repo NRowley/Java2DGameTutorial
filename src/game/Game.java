@@ -1,5 +1,6 @@
 package game;
 
+import gfx.Colors;
 import gfx.Screen;
 import gfx.SpriteSheet;
 
@@ -19,7 +20,7 @@ public class Game extends Canvas implements Runnable {
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-
+    private int[] colors = new int[6 * 6 * 6];
     private JFrame frame;
     public boolean running = false;
     public int tickCount = 0;
@@ -48,6 +49,18 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
+        int index = 0;
+        for (int r = 0; r < 6; r++) {
+            for (int g = 0; g < 6; g++) {
+                for (int b = 0; b < 6; b++) {
+                    int rr = (r * 255 / 5);
+                    int gg = (g * 255 / 5);
+                    int bb = (b * 255 / 5);
+
+                    colors[index++] = rr << 16 | gg << 8 | bb;
+                }
+            }
+        }
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
         input = new InputHandler(this);
     }
@@ -130,7 +143,19 @@ public class Game extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
-        screen.render(pixels, 0, WIDTH);
+
+        for (int y = 0; y < 32; y++) {
+            for (int x = 0; x < 32; x++) {
+                screen.render(x<<3, y<<3, 0, Colors.get(555,500, 050, 005));
+            }
+        }
+
+        for (int y = 0; y < screen.height; y++) {
+            for (int x = 0; x < screen.width; x++) {
+                int colorCode = screen.pixels[x+y * screen.width];
+                if(colorCode < 255) pixels[x+y * WIDTH] = colors[colorCode];
+            }
+        }
 
         Graphics g = bs.getDrawGraphics();
         g.drawRect(0, 0, getWidth(), getHeight());
