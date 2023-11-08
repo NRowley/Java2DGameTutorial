@@ -17,7 +17,7 @@ public class Screen {
     public SpriteSheet sheet;
 
     public Screen(int width, int height, SpriteSheet sheet) {
-        this.width = height;
+        this.width = width;
         this.height = height;
         this.sheet = sheet;
 
@@ -40,13 +40,13 @@ public class Screen {
                 int xMin = xTile * 8 - xOffset;
                 int xMax = xMin + 8;
                 if (xMin < 0) xMin = 0;
-                if (xMin > width) xMax = width;
+                if (xMax > width) xMax = width;
 
                 int tileIndex = (xTile & (MAP_WIDTH_MASK)) + (yTile & (MAP_WIDTH_MASK)) * MAP_WIDTH;
 
                 for (int y = yMin; y < yMax; y++) {
                     int sheetPixel = ((y + yOffset) & 7) * sheet.width + ((xMin + xOffset) & 7);
-                    int tilePixel = offset +xMin + y * row;
+                    int tilePixel = offset + xMin + y * row;
                     for (int x = xMin; x < xMax; x++) {
                         int color = tileIndex * 4 + sheet.pixels[sheetPixel++];
                         pixels[tilePixel++] = colors[color];

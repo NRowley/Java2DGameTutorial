@@ -33,8 +33,8 @@ public class SpriteSheet {
             pixels[i] = (pixels[i] & 0xff)/ 64;
         }
 //Shows bits of pixels on sprite sheet
-        for (int i = 0; i<8;i++){
-            System.out.println(pixels[i]);
-        }
+//        for (int i = 0; i<8;i++){
+//            System.out.println(pixels[i]);
+//        }
     }
 }

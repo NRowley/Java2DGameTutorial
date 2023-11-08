@@ -25,6 +25,7 @@ public class Game extends Canvas implements Runnable {
     public int tickCount = 0;
 
     private Screen screen;
+    public InputHandler input;
 
     //    private SpriteSheet spriteSheet = new SpriteSheet("/sprite_sheet.png");
     //GAME METHODS//////////////////////////////////////
@@ -48,6 +49,7 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         screen = new Screen(WIDTH, HEIGHT, new SpriteSheet("/sprite_sheet.png"));
+        input = new InputHandler(this);
     }
 
     public synchronized void start() {
@@ -103,7 +105,20 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {
         tickCount++;
-//screen.xOffset++;
+
+        if (input.up.isPressed()) {
+            screen.yOffset--;
+        }
+        if (input.down.isPressed()) {
+            screen.yOffset++;
+        }
+        if (input.left.isPressed()) {
+            screen.xOffset--;
+        }
+        if (input.right.isPressed()) {
+            screen.xOffset++;
+        }
+
 //        for (int i = 0; i < pixels.length; i++) {
 //            pixels[i] = i + tickCount;
 //        }
